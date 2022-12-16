@@ -1,7 +1,13 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import { Component } from "react";
 
-function App() {
+class App extends Component {
+  render() {
+    return <h1>Oi</h1>;
+  }
+}
+/*function App() {
   return (
     <div className="App">
       <header className="App-header">
@@ -21,5 +27,5 @@ function App() {
     </div>
   );
 }
-
+*/
 export default App;
