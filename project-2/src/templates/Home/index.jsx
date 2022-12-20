@@ -5,19 +5,25 @@ import { Component } from "react";
 import { loadPosts } from "../../utils/load-posts";
 import { Posts } from "../../components/posts";
 import { Button } from "../../components/Button";
+import { TextInput } from "../../components/TextInput";
 
 class Home extends Component {
   state = {
     posts: [],
     allPosts: [],
     page: 0,
-    postsPerPage: 10,
+    postsPerPage: 2,
     searchValue: "",
   };
 
   async componentDidMount() {
     await this.loadPosts();
   }
+
+  componentDidUpdate() {
+    console.log(this.props);
+  }
+
   loadPosts = async () => {
     const { page, postsPerPage } = this.state;
     const postsAndPhotos = await loadPosts();
@@ -42,43 +48,36 @@ class Home extends Component {
   render() {
     const { posts, page, postsPerPage, allPosts, searchValue } = this.state;
     const noMorePosts = page + postsPerPage >= allPosts.length;
+    const filteredPosts = !!searchValue
+      ? allPosts.filter((post) => {
+          return post.title.toLowerCase().includes(searchValue.toLowerCase());
+        })
+      : posts;
 
     return (
       <section className="container">
-        <input onChange={this.handleChange} value={searchValue} type="search" />
-        <br /> <br /> <br />
-        <Posts posts={posts} />
-        <div className="button-container">
-          <Button
-            text="Load more Posts"
-            onClick={this.loadMorePosts}
-            disabled={noMorePosts}
+        <div className="search-container">
+          {!!searchValue && <h1>Search Value : {searchValue}</h1>}
+          <TextInput
+            searchValue={searchValue}
+            handleChange={this.handleChange}
           />
+        </div>
+        <br /> <br /> <br />
+        {filteredPosts.length > 0 && <Posts posts={filteredPosts} />}
+        {filteredPosts.length === 0 && <p>Não existem Posts</p>}
+        <div className="button-container">
+          {!searchValue && (
+            <Button
+              text="Load more Posts"
+              onClick={this.loadMorePosts}
+              disabled={noMorePosts}
+            />
+          )}
         </div>
       </section>
     );
   }
 }
 
-/*function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-*/
 export default Home;

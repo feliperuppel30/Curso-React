@@ -6,6 +6,6 @@ import Home from "./templates/Home";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Home />
+    <Home tem-uma-prop="O valor dela" />
   </React.StrictMode>
 );
