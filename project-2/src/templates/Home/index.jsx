@@ -30,9 +30,9 @@ export const Home = () =>{
 const handleLoadPosts = useCallback(async (page, postPerPage) => {
   const postsAndPhotos = await loadPosts();
 
-  setPosts(postsAndPhotos.slice(page, postsPerPage));
+  setPosts(postsAndPhotos.slice(page, postPerPage));
   setAllPosts(postsAndPhotos)
-}, [postsPerPage]);
+}, []);
 
 useEffect(()=>{
   console.log(new Date().toLocaleString('pt-br'))
@@ -68,6 +68,7 @@ const handleChange = (e) => {
       <br /> <br /> <br />
       {filteredPosts.length > 0 && <Posts posts={filteredPosts} />}
       {filteredPosts.length === 0 && <p>Não existem Posts</p>}
+      
       <div className="button-container">
         {!searchValue && (
           <Button
