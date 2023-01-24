@@ -9,14 +9,8 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
 
-export const Home = () => {
-  /*state = {
-    posts: [],
-    allPosts: [],
-    page: 0,
-    postsPerPage: 2,
-    searchValue: "",
-  };*/
+export const Home = () =>{ 
+
   const [posts, setPosts] = useState([]);
   const [allPosts, setAllPosts] = useState([]);
   const [page, setPage] = useState(0);
@@ -38,7 +32,7 @@ const handleLoadPosts = useCallback(async (page, postPerPage) => {
 
   setPosts(postsAndPhotos.slice(page, postsPerPage));
   setAllPosts(postsAndPhotos)
-}, []);
+}, [postsPerPage]);
 
 useEffect(()=>{
   console.log(new Date().toLocaleString('pt-br'))
